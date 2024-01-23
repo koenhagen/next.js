@@ -58,17 +58,14 @@ jobs:
 
   test-unit:
     name: test unit
-    needs: ['changes']
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         node: [20]
-
-    uses: koenhagen/measure-energy-action@v0.27
-    with:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      count: 10
-      run: node run-tests.js -c ${TEST_CONCURRENCY} --type unit
-
-    secrets: inherit
+    steps:
+      - uses: ./.github/workflows/build_reusable.yml
+        with:
+          nodeVersion: ${{ matrix.node }}
+          afterBuild: node run-tests.js -c ${TEST_CONCURRENCY} --type unit
