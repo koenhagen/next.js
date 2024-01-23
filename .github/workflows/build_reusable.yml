@@ -69,11 +69,7 @@ env:
 jobs:
   build:
     timeout-minutes: 15
-    runs-on:
-      - 'self-hosted'
-      - 'linux'
-      - 'x64'
-      - 'metal'
+    runs-on: ubuntu-latest
 
     steps:
       - run: fnm use --install-if-missing ${{ inputs.nodeVersion || env.NODE_LTS_VERSION }}
